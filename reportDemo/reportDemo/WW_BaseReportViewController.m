@@ -202,15 +202,6 @@
                 lab.numberOfLines = 0;
                 lab.text = detailAry[0];
                 
-                if (i < _lockColumn) {
-                    lab.frame = CGRectMake(scrollViewLeft , 0, labWidth, isTwo ? 80 : 50);
-                    [_bgView addSubview:lab];
-                    scrollViewLeft = scrollViewLeft + labWidth;
-                }else{
-                    lab.frame = CGRectMake(scrollViewWidth , 0, labWidth, isTwo ? 80 : 50);
-                    [_headerViewScrollView addSubview:lab];
-                    scrollViewWidth = scrollViewWidth + labWidth;
-                }
                 
                 for (int j = 0; j < detail2Ary.count; j ++) {
                     UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(scrollViewWidth + labWidth * j, 40, labWidth , 40)];
@@ -233,20 +224,28 @@
                     lab2.text = detail2Ary[j];
                     
                     if (i < _lockColumn) {
-                        lab.frame = CGRectMake(scrollViewLeft , 0, labWidth, isTwo ? 80 : 50);
-                        [_bgView addSubview:lab];
-                        scrollViewLeft = scrollViewLeft + detail2Ary.count * labWidth;
+                        lab2.frame = CGRectMake(scrollViewLeft + labWidth * j , 40, labWidth, 40);
+                        [_bgView addSubview:lab2];
                     }else{
-                        lab.frame = CGRectMake(scrollViewWidth , 0, labWidth, isTwo ? 80 : 50);
-                        [_headerViewScrollView addSubview:lab];
-                        scrollViewWidth = scrollViewWidth + detail2Ary.count * labWidth;
+                        lab2.frame = CGRectMake(scrollViewWidth + labWidth * j , 40, labWidth, 40);
+                        [_headerViewScrollView addSubview:lab2];
                     }
+                }
+                
+                if (i < _lockColumn) {
+                    lab.frame = CGRectMake(scrollViewLeft , 0, labWidth * detail2Ary.count, 40);
+                    [_bgView addSubview:lab];
+                    scrollViewLeft = scrollViewLeft + labWidth * detail2Ary.count;
+                }else{
+                    lab.frame = CGRectMake(scrollViewWidth , 0, labWidth * detail2Ary.count, 40);
+                    [_headerViewScrollView addSubview:lab];
+                    scrollViewWidth = scrollViewWidth + labWidth * detail2Ary.count;
                 }
             }
         }
         _headerViewScrollView.frame = CGRectMake(scrollViewLeft, 0, scrollViewWidth,  _headerViewScrollView.frame.size.height);
     }
-   _listCV.frame = CGRectMake(0, _headerViewScrollView.frame.origin.x + _headerViewScrollView.frame.size.height, _listCV.frame.size.width, _bgView.frame.size.height - _headerViewScrollView.frame.origin.x - _headerViewScrollView.frame.size.height);
+   _listCV.frame = CGRectMake(0,_headerViewScrollView.frame.size.height, _listCV.frame.size.width, _bgView.frame.size.height - _headerViewScrollView.frame.size.height);
 }
 
 #pragma mark - UICollectionView 的代理方法
